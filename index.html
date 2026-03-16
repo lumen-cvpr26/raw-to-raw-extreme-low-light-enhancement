@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Efficient Real-Time Raw-to-Raw Denoising for Extreme Low-Light Ultra HD Video on Mobile Devices</title>
+  <meta name="description" content="CVPR project page for Efficient Real-Time Raw-to-Raw Denoising for Extreme Low-Light Ultra HD Video on Mobile Devices.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <nav class="topbar">
+    <div class="container nav-inner">
+      <div class="brand">CVPR Project Page</div>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#challenge">Challenge</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#bibtex">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container narrow">
+      <div class="hero-copy">
+        <span class="eyebrow">CVPR 2026 • Project website</span>
+        <h2>Efficient Real-Time Raw-to-Raw Denoising for Extreme Low-Light Ultra HD Video on Mobile Devices</h2>
+        <p class="authors">Charantej Reddy Pochimireddy, Subhasmita Sahoo, Apoorva Verma, Palavalli Shyam, Swapnil Malviya, Sarvesh, Raj Narayana Gadde</p>
+        <p class="affil">Samsung R & D Institute Bengaluru</p>
+
+        <div class="button-row">
+          <a class="button primary" href="assets/pdfs/paper.pdf" target="_blank" rel="noopener">Paper PDF</a>
+          <a class="button" href="#">Code (coming soon)</a>
+          <a class="button" href="#">Data (coming soon)</a>
+        </div>
+
+        <div class="hero-bullets">
+          <div class="chip">Raw-to-raw denoising</div>
+          <div class="chip">Extreme low-light UHD video</div>
+          <div class="chip">Mobile ISP compatible</div>
+          <div class="chip">Real-time deployment</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="abstract" class="section">
+      <div class="container narrow">
+        <h2>Abstract</h2>
+        <p>
+          Recent advancements in deep neural networks have significantly improved visual quality of camera captures under low-light conditions,
+          yet extreme low-light video quality remains inadequate for real-time Ultra HD mobile capture. Existing models are often too expensive
+          for strict latency and power budgets. This work presents a comprehensive framework for real-time raw-to-raw denoising of extreme low-light
+          UHD videos, designed for seamless integration into existing ISP pipelines. The paper combines a diverse raw data creation methodology,
+          a low-complexity architecture tailored to mobile compute elements, and deployment-focused optimizations including reparameterization,
+          restructuring, and quantization.
+        </p>
+      </div>
+    </section>
+
+    <section id="challenge" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why this problem is hard</h2>
+          <p>Mobile low-light video enhancement must satisfy quality, latency, power, and ISP compatibility at the same time.</p>
+        </div>
+        <div class="grid two">
+          <div class="card media-card">
+            <img src="assets/images/fig1_latency_power.png" alt="Latency and power comparison chart">
+            <div class="caption">Latency and power efficiency comparison of raw to raw
+              denoising networks.</div>
+          </div>
+          <div class="stack">
+            <div class="mini-card">
+              <h3>Strict deployment budget</h3>
+              <p>For 30 fps video, the pipeline must stay within real-time latency and tight current limits, which rules out many restoration models.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Extreme low-light degradation</h3>
+              <p>At illumination below 1 lux, raw sensor noise increases sharply while scene details are heavily suppressed.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Data scarcity</h3>
+              <p>Paired real raw video data is difficult to capture, especially for UHD, temporal consistency, and sensor-specific conditions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="method" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Method overview</h2>
+          <p>A practical research-to-product pipeline: dataset design, ISP-compatible architecture, and deployment optimization.</p>
+        </div>
+
+        <div class="grid three">
+          <div class="info-card">
+            <div class="num">01</div>
+            <h3>Ground-truth preparation</h3>
+            <p>Controlled raw capture and multi-stage denoising are used to form stronger supervision for training under extreme low-light conditions.</p>
+          </div>
+          <div class="info-card">
+            <div class="num">02</div>
+            <h3>Efficient base architecture</h3>
+            <p>Space-to-Depth reduces spatial cost while mobile residual local feature blocks preserve restoration quality.</p>
+          </div>
+          <div class="info-card">
+            <div class="num">03</div>
+            <h3>Deployment optimization</h3>
+            <p>Distillation, structural reparameterization, spatial restructuring, and quantization bring the model into a product-ready operating range.</p>
+          </div>
+        </div>
+
+        <div class="grid two method-panels">
+          <div class="card media-card">
+            <img src="assets/images/fig5_gt_prep.png" alt="Ground truth preparation figure">
+            <div class="caption">[Ground truth preparation] Controlled low-light raw
+              capture with tripod stabilization, followed by two-stage denoising: burst averaging + residual noise removal via synthetic-trained
+              large mRLFB model.</div>
+          </div>
+          <div class="card media-card">
+            <p><br></p>
+            <img src="assets/images/fig6_architecture.png" alt="Denoising base model architecture">
+            <div class="caption">[Base model architecture] Integrates Space-to-Depth (S2D) for spatial reduction, mobile-optimized Residual Local
+              Feature Blocks (mRLFB), and residual learning to enable real-time UHD video processing on resource-constrained devices.</div>
+          </div>
+          <p><br></p>
+        </div>
+
+        <div class="grid two method-panels">
+          <div class="card media-card">
+            <img src="assets/images/fig9_reparam.png" alt="Re-parameterization figure">
+            <div class="caption">[Structural re-parameterization] A multi-branch block
+              is used in place of 3×3 convolution in mRLFB for training which are fused together post-training.</div>
+          </div>
+          <div class="card media-card">
+            <p><br><br><br></p>
+            <img src="assets/images/fig9_resolution_reduction.png" alt="Spatial resolution reduction restructuring figure">
+            <div class="caption">[Spatial resolution reduction] Restructured model with
+              halved spatial resolution and doubled channel depth via weight
+              reconfiguration, leveraging NPU latency equivalence for both scenarios.</div>
+          </div>
+          <p><br><br></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Results</h2>
+        </div>
+        <div class="card full-media">
+          <img src="assets/images/fig10_visual_comparison.png" alt="Visual comparison figure">
+        </div>
+
+        <div class="card full-media">
+          <p><br><br></p>
+          <video autoplay controls muted loop playsinline width="570" height="360">
+            <source src="assets/videos/scene_1/No_Model.mp4" type="video/mp4">
+          </video>
+          <video autoplay controls muted loop playsinline width="570" height="360">
+            <source src="assets/videos/scene_1/ModelAQ.mp4" type="video/mp4">
+          </video>
+          <p><br><br></p>
+        </div>
+        
+        <div class="card full-media">
+          <p><br><br></p>
+          <video autoplay controls muted loop playsinline width="570" height="360">
+            <source src="assets/videos/scene_2/No_Model.mp4" type="video/mp4">
+          </video>
+          <video autoplay controls muted loop playsinline width="570" height="360">
+            <source src="assets/videos/scene_2/ModelAQ.mp4" type="video/mp4">
+          </video>
+          <p><br><br></p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="bibtex" class="section alt">
+      <div class="container narrow">
+        <h2>BibTeX</h2>
+<pre><code>@inproceedings{raw2rawcvpr26,
+  title={Efficient Real-Time Raw-to-Raw Denoising for Extreme Low-Light Ultra HD Video on Mobile Devices},
+  author={Charantej Reddy Pochimireddy, Subhasmita Sahoo, Apoorva Verma, Palavalli Shyam, Swapnil Malviya, Sarvesh, Raj Narayana Gadde},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2026}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 authors. Template adapted from nerfies/nerfies.github.io (CC BY-SA 4.0).</p>
+      <!-- <a href="assets/pdfs/paper.pdf" target="_blank" rel="noopener">Open PDF</a> -->
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
